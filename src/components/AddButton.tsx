@@ -20,8 +20,12 @@ export const AddButton = ({
 }: AddButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const handleMouseEnter = () => {
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsOpen(false);
   };
 
   const handleActionClick = (action: () => void) => {
@@ -68,13 +72,14 @@ export const AddButton = ({
   ];
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div 
+      className="fixed bottom-8 right-8 z-50"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Backdrop overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm animate-fade-in"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm animate-fade-in" />
       )}
 
       {/* Action buttons */}
@@ -94,7 +99,6 @@ export const AddButton = ({
 
         {/* Main add button */}
         <button
-          onClick={toggleMenu}
           className={`
             relative w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 
             rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 
