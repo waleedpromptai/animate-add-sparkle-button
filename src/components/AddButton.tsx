@@ -1,22 +1,17 @@
 
 import { useState } from "react";
-import { Plus, FileText, Image, Video, StickyNote, Calendar } from "lucide-react";
-import { ActionButton } from "./ActionButton";
+import { Plus, FolderPlus, Layers, PenTool } from "lucide-react";
 
 interface AddButtonProps {
-  onCreatePost: () => void;
-  onAddPhoto: () => void;
-  onAddVideo: () => void;
-  onAddNote: () => void;
-  onAddEvent: () => void;
+  onCreateCategory: () => void;
+  onCreateSubCategory: () => void;
+  onCreatePrompt: () => void;
 }
 
 export const AddButton = ({
-  onCreatePost,
-  onAddPhoto,
-  onAddVideo,
-  onAddNote,
-  onAddEvent,
+  onCreateCategory,
+  onCreateSubCategory,
+  onCreatePrompt,
 }: AddButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,45 +30,25 @@ export const AddButton = ({
 
   const actions = [
     {
-      icon: FileText,
-      label: "Create Post",
-      onClick: () => handleActionClick(onCreatePost),
-      color: "from-blue-500 to-blue-600",
-      delay: "delay-[50ms]",
+      icon: FolderPlus,
+      label: "Create Category",
+      onClick: () => handleActionClick(onCreateCategory),
     },
     {
-      icon: Image,
-      label: "Add Photo",
-      onClick: () => handleActionClick(onAddPhoto),
-      color: "from-green-500 to-green-600",
-      delay: "delay-[100ms]",
+      icon: Layers,
+      label: "Create Sub Category",
+      onClick: () => handleActionClick(onCreateSubCategory),
     },
     {
-      icon: Video,
-      label: "Add Video",
-      onClick: () => handleActionClick(onAddVideo),
-      color: "from-purple-500 to-purple-600",
-      delay: "delay-[150ms]",
-    },
-    {
-      icon: StickyNote,
-      label: "Add Note",
-      onClick: () => handleActionClick(onAddNote),
-      color: "from-yellow-500 to-yellow-600",
-      delay: "delay-[200ms]",
-    },
-    {
-      icon: Calendar,
-      label: "Add Event",
-      onClick: () => handleActionClick(onAddEvent),
-      color: "from-red-500 to-red-600",
-      delay: "delay-[250ms]",
+      icon: PenTool,
+      label: "Create Prompt",
+      onClick: () => handleActionClick(onCreatePrompt),
     },
   ];
 
   return (
     <div 
-      className="fixed bottom-8 right-8 z-50"
+      className="fixed top-8 right-8 z-50"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -82,20 +57,37 @@ export const AddButton = ({
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm animate-fade-in" />
       )}
 
-      {/* Action buttons */}
-      <div className="relative">
-        {actions.map((action, index) => (
-          <ActionButton
-            key={action.label}
-            icon={action.icon}
-            label={action.label}
-            onClick={action.onClick}
-            color={action.color}
-            isVisible={isOpen}
-            delay={action.delay}
-            index={index}
-          />
-        ))}
+      <div className="flex items-start gap-4">
+        {/* Side list of actions */}
+        <div className={`
+          flex flex-col gap-2 transition-all duration-500 ease-out
+          ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}
+        `}>
+          {actions.map((action, index) => (
+            <div
+              key={action.label}
+              className={`
+                transition-all duration-300 ease-out
+                ${isOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}
+              `}
+              style={{ transitionDelay: `${index * 50}ms` }}
+            >
+              <button
+                onClick={action.onClick}
+                className="
+                  flex items-center gap-3 px-4 py-3 bg-white/90 backdrop-blur-sm
+                  rounded-lg shadow-lg border border-white/50 hover:bg-white
+                  transition-all duration-200 ease-out hover:shadow-xl
+                  text-slate-700 hover:text-slate-900 whitespace-nowrap
+                  transform hover:scale-105
+                "
+              >
+                <action.icon className="w-4 h-4" />
+                <span className="text-sm font-medium">{action.label}</span>
+              </button>
+            </div>
+          ))}
+        </div>
 
         {/* Main add button */}
         <button
@@ -103,7 +95,7 @@ export const AddButton = ({
             relative w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 
             rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 
             transition-all duration-300 ease-spring flex items-center justify-center
-            border-4 border-white/20 backdrop-blur-sm
+            border-4 border-white/20 backdrop-blur-sm flex-shrink-0
             ${isOpen ? 'rotate-45 scale-110' : 'rotate-0 scale-100'}
           `}
         >

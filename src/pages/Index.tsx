@@ -2,24 +2,16 @@
 import { AddButton } from "@/components/AddButton";
 
 const Index = () => {
-  const handleCreatePost = () => {
-    console.log("Creating new post...");
+  const handleCreateCategory = () => {
+    console.log("Creating category...");
   };
 
-  const handleAddPhoto = () => {
-    console.log("Adding photo...");
+  const handleCreateSubCategory = () => {
+    console.log("Creating sub category...");
   };
 
-  const handleAddVideo = () => {
-    console.log("Adding video...");
-  };
-
-  const handleAddNote = () => {
-    console.log("Adding note...");
-  };
-
-  const handleAddEvent = () => {
-    console.log("Adding event...");
+  const handleCreatePrompt = () => {
+    console.log("Creating prompt...");
   };
 
   return (
@@ -36,11 +28,9 @@ const Index = () => {
         
         <div className="relative">
           <AddButton
-            onCreatePost={handleCreatePost}
-            onAddPhoto={handleAddPhoto}
-            onAddVideo={handleAddVideo}
-            onAddNote={handleAddNote}
-            onAddEvent={handleAddEvent}
+            onCreateCategory={handleCreateCategory}
+            onCreateSubCategory={handleCreateSubCategory}
+            onCreatePrompt={handleCreatePrompt}
           />
         </div>
 
